@@ -373,48 +373,16 @@ func TestInfLoop(t *testing.T) {
 }
 
 func TestBug(t *testing.T) {
-	type Mode string
-
-	type Usage struct {
-		ProviderID string `json:"-"`
+	type T struct {
+		F int
 	}
 
-	type Tier struct {
-		Upto  int `json:"upto,omitempty"`
-		Price int `json:"price,omitempty"`
-		Base  int `json:"base,omitempty"`
+	got := map[string]T{
+		"k": {},
 	}
 
-	type Feature struct {
-		ProviderID string `json:"-"`
-
-		Title string `json:"title,omitempty"`
-
-		Mode      Mode   `json:"type,omitempty"`
-		Reset     string `json:"reset,omitempty"`
-		Aggregate string `json:"-,omitempty"`
-		Tiers     []Tier `json:"tiers,omitempty"`
-
-		// Set in LookupSchedule and later reporters of usage
-		Usage Usage `json:"-"`
-	}
-
-	type Features map[string]Feature
-
-	type Schedule struct {
-		Features Features
-	}
-
-	got := Schedule{
-		Features: Features{
-			"foo": Feature{},
-		},
-	}
-
-	want := Schedule{
-		Features: Features{
-			"foo": Feature{},
-		},
+	want := map[string]T{
+		"k": {},
 	}
 
 	diff.Test(t, t.Errorf, got, want)
